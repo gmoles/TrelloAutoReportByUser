@@ -1,0 +1,22 @@
+{
+  "name": "trelloautoreportbyuser",
+  "version": "1.0.0",
+  "description": "Project to generate Trello's activities report by user",
+  "main": "readJson.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmoles/TrelloAutoReportByUser.git"
+  },
+  "author": "Guilherme Moles",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gmoles/TrelloAutoReportByUser/issues"
+  },
+  "homepage": "https://github.com/gmoles/TrelloAutoReportByUser#readme",
+  "dependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
