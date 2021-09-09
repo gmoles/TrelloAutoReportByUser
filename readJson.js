@@ -9,7 +9,7 @@ fs.readFile("./repositJson/my-file.json" , "utf8", function(err, data){
     var jsonData = JSON.parse(data); // faz o parse para json para o Objeto
     //Se pre\cisar em array use:
     //jsonData = Object.keys(jsonData);
-    var actions = jsonData.actions;
+    var actions = jsonData.actions.reverse();
     //date
     //type
     //list.name
@@ -43,32 +43,38 @@ fs.readFile("./repositJson/my-file.json" , "utf8", function(err, data){
           //console.log('Card não pertence ao Membro')
         } else {
             
-            if (idMemberCard === members[item].id){
+            if (idMemberCard === members[item].id && !card.closed){
               console.log("   Cartão " + card.name);
               
-              // Verificar Movimentações de Cartão
+              //Verificar Movimentações de Cartão
               actions.forEach((action) => {
-                //console.log(card.id);
-                //console.log(card.idMembers[0] );
-
+            
                 //Verifica se a ação do quadro é referente aos cartões
-                if (action.type.indexOf('updateCard') > -1){
+                if (action.type.indexOf('updateCard') > -1 || action.type.indexOf('createCard') > -1){
                   
                   var idActionCard = action.data.card.id;
-                  var listName = action.data.list.name;
-          
-                  if (typeof idActionCard === "undefined"){
-                    //console.log('Card não pertence ao Membro')
-                  } else { 
+                  
+                  //Verifica se a ação pertence ao Card
+                  if (card.id === idActionCard){
+                  
+                  //Tenta colocar na variavel o nome da Lista
+                  try {
+                    var listName = action.data.list.name;
+                    var listNameBefore = "";
+                  } catch ({ message }) {
+                    console.log("        " + message);
+                    try {
+                      var listName =  action.data.listAfter.name;
+                      var listNameBefore = action.data.listBefore.name;
                       
-                      if (idActionCard === card.id){
-                        console.log("       Ação " + action.id 
-                                             + " " + action.date 
-                                             + " " + action.type);
-                                             //+ " " + action.data.list.name);
-
-                      }
+                    } catch ({ message }) {
+                      console.log("        " + message);
                     }
+                  }
+                  console.log("        " + listName + " " + listNameBefore + " " + action.date);
+
+
+                  } else {}
                   }
               });
             }       
