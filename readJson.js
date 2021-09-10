@@ -1,6 +1,8 @@
-var fs = require("fs");
+import { writeFile } from 'fs';
+import { Buffer } from 'buffer';
 
- 
+var fs = require("fs"); 
+
 var reportItiActivities = [];
 
 var vData = null;
@@ -172,5 +174,12 @@ fs.readFile("./repositJson/my-file.json" , "utf8", function(err, data){
 
   console.log("fim");
 
-});  
+
+  const data = new Uint8Array(Buffer.from(reportItiActivities));
+  writeFile('./repositJson/my-file.json', data, (err) => {
+    if (err) throw err;
+    console.log('The file has been saved!');
+  });
+}); 
+
 
