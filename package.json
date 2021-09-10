@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/gmoles/TrelloAutoReportByUser#readme",
   "dependencies": {
+    "excel4node": "^1.7.2",
     "nodemon": "^2.0.12"
-  }
+  },
+  "devDependencies": {},
+  "keywords": []
 }

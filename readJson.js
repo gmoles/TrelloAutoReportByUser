@@ -1,10 +1,20 @@
-import { writeFile } from 'fs';
-import { Buffer } from 'buffer';
-
 var fs = require("fs"); 
+const xl = require('excel4node');
+const wb = new xl.Workbook();
+const ws = wb.addWorksheet('Worksheet Name');
 
 var reportItiActivities = [];
-
+const headingColumnNames = [
+  "Data",
+  "Sistema",
+  "Atividade Realizada",
+  "Inicio",
+  "Fim",
+  "Prazo",
+  "Status",
+  "Responsável",
+  "Observações",
+]
 var vData = null;
 var vSistema = null;
 var vAtividadeRealizada = null;
@@ -175,11 +185,24 @@ fs.readFile("./repositJson/my-file.json" , "utf8", function(err, data){
   console.log("fim");
 
 
-  const data = new Uint8Array(Buffer.from(reportItiActivities));
-  writeFile('./repositJson/my-file.json', data, (err) => {
-    if (err) throw err;
-    console.log('The file has been saved!');
+  let headingColumnIndex = 1; //diz que começará na primeira linha
+  headingColumnNames.forEach(heading => { //passa por todos itens do array
+      // cria uma célula do tipo string para cada título
+      ws.cell(1, headingColumnIndex++).string(heading);
   });
+  
+  let rowIndex = 2;
+  reportItiActivities.forEach( record => {
+      let columnIndex = 1;
+      Object.keys(record).forEach(columnName =>{
+          ws.cell(rowIndex,columnIndex++)
+              .string(record [columnName])
+      });
+      rowIndex++;
+  }); 
+  
+  
+  wb.write('ArquivoExcel.xlsx');
 }); 
 
 
